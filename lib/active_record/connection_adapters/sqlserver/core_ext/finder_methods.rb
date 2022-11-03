@@ -11,6 +11,8 @@ module ActiveRecord
 
           # Same as original except we order by values in distinct select if present.
           def construct_relation_for_exists(conditions)
+            return super unless klass.connection.adapter_name == "SQLServer"
+
             if distinct_value && offset_value
               relation = limit!(1)
 
